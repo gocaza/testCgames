@@ -1,0 +1,56 @@
+# set the compiler
+# CC := clang
+
+# set the compiler flags for clang
+# CFLAGS := `sdl2-config --libs --cflags` -ggdb3 -O0 --std=c99 -Wall -lSDL2_image -lm
+
+CC = gcc
+# OBJCOPY = objcopy
+# OBJDUMP = objdump
+##LIBDIR = ../../AVR-Programming-Library
+#LIBDIR = /usr/lib/avr/include
+TARGET = main
+#TARGET = $(lastword $(subst /, ,$(CURDIR)))
+
+SOURCES=$(wildcard *.c $(LIBDIR)/*.c)
+OBJECTS=$(SOURCES:.c=.o)
+HEADERS=$(wildcard *.h $(LIBDIR)/*.h)
+REBUILDABLES = $(OBJECTS) $(TARGET)
+
+CFLAGS = -g -O0 -Wall 
+CFLAGS = -Os -g -std=c17 -Wall -Werror
+CFLAGS += -Wsign-compare -Wwrite-strings -Wtype-limits -pedantic
+# CFLAGS += -fsanitize=address
+## Use short (8-bit) data types 
+CFLAGS += -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums 
+## Splits up object files per function
+CFLAGS += -ffunction-sections -fdata-sections 
+CPPFLAGS = 
+TARGET_ARCH = 
+CPPSTANDARD = -std=c++11
+
+all: $(TARGET)
+	echo All done
+
+$(TARGET): $(OBJECTS)
+	$(CC) -g -o $@ $^
+
+%.o: %.c $(HEADERS) Makefile
+	 $(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c -o $@ $<;
+
+#%.o: %.c
+#    $(CC) $(CFLAGS) -c -o $@ $<;
+#	$(CC) -g -O0 -Wall -o $@ -std=c++11 -c $<
+#    gcc -g -O0 -Wall -o $@ -c $<
+
+%.dep: %.c
+	$(CC) -M $(FLAGS) $< > $@
+include $(OBJECTS:.o=.dep)
+
+clean:
+	rm -f $(REBUILDABLES)	
+	rm -f $(TARGET).elf $(TARGET).hex $(TARGET).obj \
+	$(TARGET).o $(TARGET).d $(TARGET).eep $(TARGET).lst \
+	$(TARGET).lss $(TARGET).sym $(TARGET).map $(TARGET)~ \
+	$(TARGET).dep
+	echo Clean done
