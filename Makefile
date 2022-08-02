@@ -16,7 +16,7 @@ CFLAGS := `sdl2-config --libs --cflags` -ggdb3 -O0 -g --std=c17 -Wall -lSDL2_ima
 ##LIBDIR = ../../AVR-Programming-Library
 #LIBDIR = /usr/lib/avr/include
 TARGET = main
-#TARGET = $(lastword $(subst /, ,$(CURDIR)))
+# TARGET = $(lastword $(subst /, ,$(CURDIR)))
 
 SOURCES=$(wildcard *.c $(LIBDIR)/*.c)
 OBJECTS=$(SOURCES:.c=.o)
@@ -44,5 +44,6 @@ $(TARGET): $(OBJECTS)
 include $(OBJECTS:.o=.dep)
 
 clean:
-	rm -f $(REBUILDABLES)
+	rm -f $(REBUILDABLES) \
+	$(OBJECTS:.o=.dep)
 .PHONY: all clean
