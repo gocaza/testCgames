@@ -1,0 +1,6 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/gcz/programming/C/testCgames/sdl_example'
+make: Leaving directory '/home/gcz/programming/C/testCgames/sdl_example'
+ 
+sdl_example.dep:1: *** missing separator.  Stop.
+

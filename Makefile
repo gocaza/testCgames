@@ -4,7 +4,7 @@
 CC := clang
 
 # set the compiler flags
-CFLAGS := `sdl2-config --libs --cflags` -ggdb3 -O0 -g --std=c17 -Wall -lSDL2_image -lm
+CFLAGS := `sdl2-config --libs --cflags` -ggdb3 -O0 -g --std=c17 -Wall -lSDL2 -lm
 # CFLAGS = -Os -g -std=c17 -Wall -Werror
 # CFLAGS += -Wsign-compare -Wwrite-strings -Wtype-limits -pedantic
 # # CFLAGS += -fsanitize=address
@@ -27,10 +27,10 @@ all: $(TARGET)
 	echo All done
 
 $(TARGET): $(OBJECTS)
-	$(CC) -g -o $@ $^
+	$(CC) -o $@ $^ $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH)
 
 %.o: %.c $(HEADERS) Makefile
-	 $(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c -o $@ $<;
+	 $(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c -o $@ $<
 
 
 # recipe for building object files
