@@ -4,7 +4,7 @@
 CC := clang
 
 # set the compiler flags
-CFLAGS := `sdl2-config --libs --cflags` -ggdb3 -O0 -g --std=c17 -Wall -lSDL2 -lm
+CFLAGS := `sdl2-config --libs --cflags` -ggdb3 -O0 -g --std=c17 -Wall -lSDL2 -lm -lSDL2_image
 # CFLAGS = -Os -g -std=c17 -Wall -Werror
 # CFLAGS += -Wsign-compare -Wwrite-strings -Wtype-limits -pedantic
 # # CFLAGS += -fsanitize=address
